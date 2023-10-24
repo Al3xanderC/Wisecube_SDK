@@ -1,0 +1,18 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wisecube_sdk_skeleton_alexander2000"
+version = "0.0.1"
+authors = [
+  { name="Paiusan Cristian", email="cristian.paiusan00@gmail.com" },
+]
+description = "Schelet SDK"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]

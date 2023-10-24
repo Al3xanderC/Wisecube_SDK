@@ -1,0 +1,1 @@
+Un sdk "schelet" pentru testare
