@@ -1,5 +1,7 @@
 from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import string_query
 from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import api_calls
+import requests
+import json
 
 
 class WisecubeClient:
@@ -30,7 +32,7 @@ class OpenClient:
     def qa(self, text):
         # payload = string_query.qa_query.format(QUERY=text)
         payload = "QUERY"
-        return api_calls.create_api_call(payload, self.headers, self.url)
+        return api_calls.create_api_call(payload, self.headers, self.url, "data")
 
 
 class AuthClient:
@@ -38,28 +40,48 @@ class AuthClient:
         self.username = username
         self.password = password
         self.api_key = api_key
-        self.url = "http://127.0.0.1:5000/api/endpoint"
+        self.url = "https://api.wisecube.ai/orpheus/graphql"
+        self.client_id = "1mbgahp6p36ii1jc851olqfhnm"
 
     def create_token(self):
-        print("create token {}".format(self.username))
-        return "sdafsafawe"
+        # curl -X POST --data @eReteta_user.json -H 'X-Amz-Target: AWSCognitoIdentityProviderService.InitiateAuth' -H
+        # 'Content-Type: application/x-amz-json-1.1' https://cognito-idp.us-east-2.amazonaws.com/ | jq -r
+        # '.AuthenticationResult.AccessToken'
+
+        payload = {
+            "AuthParameters": {
+                "USERNAME": "cristi@wisecube.ai",
+                "PASSWORD": "xdPhQgi8NK9r7tq"
+            },
+            "AuthFlow": "USER_PASSWORD_AUTH",
+            "ClientId": "1mbgahp6p36ii1jc851olqfhnm"
+        }
+        headers = {"X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth",
+                   "Content-Type": "application/x-amz-json-1.1"
+                   }
+        cognito_url = "https://cognito-idp.us-east-2.amazonaws.com/"
+
+        response = api_calls.create_api_call(payload, headers, cognito_url, "json")
+
+        token = json.loads(response.text)["AuthenticationResult"]["AccessToken"]
+
+        return token
 
     def get_headers(self):
         return {
+            'Authorization': 'Bearer {}'.format(self.create_token()),
             'Content-Type': 'application/json',
-            'x-api-key': self.api_key,
-            "Authorization": "bearer {}".format(self.create_token())
+            'x-api-key': self.api_key
         }
 
     def search(self, text):
-        headers = self.get_headers()
-        print(headers)
+        print(text)
 
     def graph(self):
         print("Auth client graph")
 
     def qa(self, text):
         headers = self.get_headers()
-        # payload = string_query.qa_query.format(QUERY=text)
-        payload = "QUERY"
-        return api_calls.create_api_call(payload, headers, self.url)
+        payload = string_query.payload
+        response = api_calls.create_api_call(payload, headers, self.url, "data")
+        print(response.text)
