@@ -1,6 +1,6 @@
 from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import string_query
 from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import api_calls
-import requests
+from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import create_payload
 import json
 
 
@@ -81,7 +81,44 @@ class AuthClient:
         print("Auth client graph")
 
     def qa(self, text):
+        variables = {
+            "query": text
+        }
+        payload = create_payload.create(string_query.qa, variables)
         headers = self.get_headers()
-        payload = string_query.payload
-        response = api_calls.create_api_call(payload, headers, self.url, "data")
-        print(response.text)
+        response = api_calls.create_api_call(payload, headers, self.url, "json")
+        print(response.json())
+
+    def documents(self, text):
+        variables = {
+            "query": text
+        }
+        payload = create_payload.create(string_query.documents, variables)
+        headers = self.get_headers()
+        response = api_calls.create_api_call(payload, headers, self.url, "json")
+        print(response.json())
+
+    def search_graph(self, text, nr):
+        if create_payload.is_valid_url(text):
+            variables = {
+                "maxNeighbours": nr,
+                "startNode": text
+            }
+        else:
+            variables = {
+                "maxNeighbours": nr,
+                "startNodeName": text
+            }
+        payload = create_payload.create(string_query.search_graph, variables)
+        headers = self.get_headers()
+        response = api_calls.create_api_call(payload, headers, self.url, "json")
+        print(response.json())
+
+    def search_text(self, text):
+        variables = {
+            "query": text
+        }
+        payload = create_payload.create(string_query.search_text, variables)
+        headers = self.get_headers()
+        response = api_calls.create_api_call(payload, headers, self.url, "json")
+        print(response.json())

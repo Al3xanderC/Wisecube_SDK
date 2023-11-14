@@ -1,6 +1,126 @@
-# aici se poate folosi si lambda
-payload = "{\"query\":\"query searchArticles($query: String, $entityFilter: String, $dateRange: [String], $hasFullText: Boolean, $publicationType: String, $authorNames: [String], $sortOrder: String, $pageNumber: Int, $pageSize: Int, $doi: String) {\\n        searchInsights(\\n            engineID:\\\"orpheus\\\",\\n            searchInput: {query: $query, entityFilter: $entityFilter, dateRange: $dateRange, hasFullText: $hasFullText, publicationType: $publicationType, authorNames: $authorNames, sortOrder: $sortOrder, pageNumber: $pageNumber, pageSize: $pageSize, doi: $doi}\\n            ) {\\n                data {\\n                    \\n                    ... on TextResults {\\n                            totalItems\\n                            totalPages\\n                            questionText\\n                            infoText\\n                            documents {\\n                                id\\n                                doi\\n                                title\\n                                authors {\\n                                    lastName\\n                                    firstName\\n                                    \\n                                }\\n                                publishDate\\n                                documentID\\n                                summaryText\\n                                \\n                            }\\n                            \\n                        }\\n                    }\\n                    __typename\\n                }\\n            }\",\"variables\":{\"query\":\"what is covid ?\",\"pageNumber\":1,\"pageSize\":10}}"
+qa = """
+query($query: String!) {
+  summaryInsights(engineID: "23343", searchInput: {query: $query, type: [QA]}) {
+    data {
+      __typename
+      ... on QAInsight {
+        question
+        answers {
+          document {
+            id
+            title
+            abs
+            source
+            index_name
+            __typename
+          }
+          took
+          context
+          statistics
+          probability
+          __typename
+        }
+        __typename
+      }
+    }
+    __typename
+  }
+}
+"""
 
-qa_query = "{\"query\":\"query questionAnswer($query: String) {\\n  summaryInsights(engineID: \\\"23343\\\", searchInput: {query: $query, type: [QA]}) {\\n    data {\\n      __typename\\n      ... on QAInsight {\\n        question\\n        answers {\\n          answer\\n          document {\\n            id\\n            title\\n            abs\\n            source\\n            index_name\\n            __typename\\n          }\\n          took\\n          context\\n          statistics\\n          probability\\n          __typename\\n        }\\n        __typename\\n      }\\n    }\\n    __typename\\n  }\\n}\",\"variables\":{\"query\":\"{STRING_QUERY}\"}}"
+documents = """
+query($query: String!)  {
+  summaryInsights(engineID: "23343", searchInput: {query: $query, type: [DOCUMENTS]}) {
+    data {
+      __typename
+      ... on QAInsight {
+        question
+        answers {
+          document {
+            id
+            title
+            abs
+            source
+            index_name
+            __typename
+          }
+          took
+          context
+          statistics
+          probability
+          __typename
+        }
+        __typename
+      }
+    }
+    __typename
+  }
+}
+"""
 
-qa_test = "{\"query\":\"query questionAnswer($query: String) {\\n  summaryInsights(engineID: \\\"23343\\\", searchInput: {query: $query, type: [QA]}) {\\n    data {\\n      __typename\\n      ... on QAInsight {\\n        question\\n        answers {\\n          answer\\n          document {\\n            id\\n            title\\n            abs\\n            source\\n            index_name\\n            __typename\\n          }\\n          took\\n          context\\n          statistics\\n          probab"
+search_graph = """
+query graphInsights($startNode: ID, $startNodeName: String, $nodeTypes: [NodeType], $maxNeighbors: Int) {
+  graphInsights(
+    engineID: "23343"
+    graphInput: {startNode: $startNode, startNodeName: $startNodeName, nodeTypes: $nodeTypes, maxNeighbors: $maxNeighbors}
+  ) {
+    description
+    data {
+      __typename
+      ... on SubGraph {
+        description
+        rootNode{
+            id
+            name
+        }
+        nodes {
+          id
+          name
+          type
+          properties {
+            name
+            values
+            __typename
+          }
+          __typename
+        }
+        edges {
+          id
+          start {
+            id
+            __typename
+          }
+          end {
+            id
+            __typename
+          }
+          __typename
+        }
+        __typename
+      }
+    }
+    __typename
+  }
+}
+"""
+
+search_text = """
+query($query: String!){
+  searchAsYouType(
+    searchInput: { searchText: $query, type: SEARCH_LABEL }
+  ) {
+    description
+    type
+    data {
+      __typename
+      ... on SearchLabels {
+        searchLabels {
+          qid
+          text
+          nodeTypes
+        }
+      }
+    }
+  }
+}
+"""
