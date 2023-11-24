@@ -1,6 +1,7 @@
 from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import string_query
 from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import api_calls
 from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import create_payload
+from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import create_response
 import json
 
 
@@ -44,17 +45,13 @@ class AuthClient:
         self.client_id = "1mbgahp6p36ii1jc851olqfhnm"
 
     def create_token(self):
-        # curl -X POST --data @eReteta_user.json -H 'X-Amz-Target: AWSCognitoIdentityProviderService.InitiateAuth' -H
-        # 'Content-Type: application/x-amz-json-1.1' https://cognito-idp.us-east-2.amazonaws.com/ | jq -r
-        # '.AuthenticationResult.AccessToken'
-
         payload = {
             "AuthParameters": {
-                "USERNAME": "cristi@wisecube.ai",
-                "PASSWORD": "xdPhQgi8NK9r7tq"
+                "USERNAME": self.username,
+                "PASSWORD": self.password
             },
             "AuthFlow": "USER_PASSWORD_AUTH",
-            "ClientId": "1mbgahp6p36ii1jc851olqfhnm"
+            "ClientId": self.client_id
         }
         headers = {"X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth",
                    "Content-Type": "application/x-amz-json-1.1"
@@ -87,7 +84,7 @@ class AuthClient:
         payload = create_payload.create(string_query.qa, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        print(response.json())
+        create_response.qa(response)
 
     def documents(self, text):
         variables = {
@@ -96,9 +93,9 @@ class AuthClient:
         payload = create_payload.create(string_query.documents, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        print(response.json())
+        create_response.documents(response)
 
-    def search_graph(self, text, nr):
+    def search_graph(self, text, nr=10):
         if create_payload.is_valid_url(text):
             variables = {
                 "maxNeighbours": nr,
@@ -112,7 +109,7 @@ class AuthClient:
         payload = create_payload.create(string_query.search_graph, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        print(response.json())
+        create_response.search_graph(response)
 
     def search_text(self, text):
         variables = {
@@ -121,4 +118,4 @@ class AuthClient:
         payload = create_payload.create(string_query.search_text, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        print(response.json())
+        create_response.search_text(response)

@@ -5,14 +5,12 @@ expected_status_codes = [200, 201, 204]
 
 def create_api_call(payload, headers, url, payload_type):
     try:
-        if payload_type == "data" :
+        if payload_type == "data":
             response = requests.request("POST", url, headers=headers, data=payload)
         else:
             response = requests.request("POST", url, headers=headers, json=payload)
         response.raise_for_status()
         if response.status_code in expected_status_codes:
-            print("Response Status Code:", response.status_code)
-            print("Response Body:", response.text)
             return response
         else:
             print(f"Unexpected Status Code: {response.status_code}")

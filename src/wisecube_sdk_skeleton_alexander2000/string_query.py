@@ -29,7 +29,7 @@ query($query: String!) {
 """
 
 documents = """
-query($query: String!)  {
+query($query: String!){
   summaryInsights(engineID: "23343", searchInput: {query: $query, type: [DOCUMENTS]}) {
     data {
       __typename
