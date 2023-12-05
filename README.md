@@ -56,7 +56,7 @@ Search Text
 auth_client.client.search_text("Your Search Text")
 ```
 
-###4. Example
+### 4. Example
 ```python
 # Replace with your actual credentials
 auth_client = WisecubeClient('your_username@domain.com', 'your_password', 'your_api_key')
