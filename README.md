@@ -10,7 +10,7 @@ The Wisecube SDK provides a Python interface to interact with the Wisecube AI se
 First, let's install all the required packages that our SDK needs. Run the following command in a cmd:
 
 ```bash
-pip install -r https://raw.githubusercontent.com/JohnDoe/myproject/main/requirements.txt
+pip install -r https://raw.githubusercontent.com/Al3xanderC/Wisecube_SDK/main/requirements.txt
 ```
 
 Then, you can download the Wisecube SDK from the GitHub repository. Use the following command in a cmd:
