@@ -1,7 +1,7 @@
-from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import string_query
-from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import api_calls
-from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import create_payload
-from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import create_response
+from src import string_query
+from src import api_calls
+from src import create_payload
+from src import create_response
 import json
 
 

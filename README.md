@@ -5,29 +5,27 @@
 The Wisecube SDK provides a Python interface to interact with the Wisecube AI services. This SDK allows developers to seamlessly integrate with Wisecube's APIs for various functionalities.
 
 ## Getting Started
-### 1. Download the SDK
+### 1. Download the SDK and install the required dependencies
 
-You can download the Wisecube SDK from the GitHub repository. Use the following commands in a cmd:
-
-```bash
-git clone https://github.com/Al3xanderC/Wisecube_SDK.git
-cd Wisecube-SDK
-```
-
-### 2. Launch the SDK from CMD  
-
-Navigate to the directory where you downloaded the SDK and open a command prompt:
+First, let's install all the required packages that our SDK needs. Run the following command in a cmd:
 
 ```bash
-cd /path/to/Wisecube-SDK
+pip install -r https://raw.githubusercontent.com/JohnDoe/myproject/main/requirements.txt
 ```
 
-### 3. Authentication
+Then, you can download the Wisecube SDK from the GitHub repository. Use the following command in a cmd:
+
+```bash
+pip install git+https://github.com/Al3xanderC/Wisecube_SDK
+```
+
+
+### 2. Authentication
 
 Create an instance of the WisecubeClient class with your authentication credentials. This is done in a python console:
 
 ```python
-from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import WisecubeClient
+from src.wisecube_sdk import WisecubeClient
 ```
 
 **Replace with your actual credentials** !
@@ -36,7 +34,9 @@ from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000 import WisecubeClient
 auth_client = WisecubeClient('your_username@domain.com', 'your_password', 'your_api_key')
 ```
 
-### 4. Use SDK Methods
+### 3. Use SDK Methods
+
+Run one of the following commands
 
 Quick Answers (QA)  
 ```python
@@ -56,7 +56,7 @@ Search Text
 auth_client.client.search_text("Your Search Text")
 ```
 
-### 5. Example
+###4. Example
 ```python
 # Replace with your actual credentials
 auth_client = WisecubeClient('your_username@domain.com', 'your_password', 'your_api_key')

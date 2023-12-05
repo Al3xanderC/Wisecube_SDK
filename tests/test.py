@@ -1,4 +1,4 @@
-from Wisecube_SDK.src.wisecube_sdk_skeleton_alexander2000.wisecube_sdk import WisecubeClient
+from src import wisecube_sdk
 RED = '\033[91m'
 RESET = '\033[0m'
 # open_client = WisecubeClient()
@@ -16,4 +16,4 @@ auth_client.client.search_text("What is covid 19?")
 print(RED + "\n\nSEARCH GRAPH_TEXT" + RESET)
 auth_client.client.search_graph("What is covid 19?", 20)
 print(RED + "\n\nSEARCH GRAPH_LINK" + RESET)
-auth_client.client.search_graph("http://www.wikidata.org/entity/Q27677605")
+auth_client.client.search_graph("http://www.wikidata.org/entity/Q27677605"
