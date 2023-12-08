@@ -1,4 +1,6 @@
 from src import wisecube_sdk
+from src.wisecube_sdk import WisecubeClient
+
 RED = '\033[91m'
 RESET = '\033[0m'
 # open_client = WisecubeClient()
