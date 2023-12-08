@@ -8,7 +8,7 @@ with open('requirements.txt') as f:
 
 
 setuptools.setup(
-    name="wisecube-sdk",
+    name="wisecube_sdk",
     version="1.0.7",
     author="Cosmin",
     author_email="cosmin@wisecube.ai",

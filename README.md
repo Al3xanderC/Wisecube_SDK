@@ -25,7 +25,7 @@ pip install git+https://github.com/Al3xanderC/Wisecube_SDK
 Create an instance of the WisecubeClient class with your authentication credentials. This is done in a python console:
 
 ```python
-from src.wisecube_sdk import WisecubeClient
+from src import WisecubeClient
 ```
 
 **Replace with your actual credentials** !

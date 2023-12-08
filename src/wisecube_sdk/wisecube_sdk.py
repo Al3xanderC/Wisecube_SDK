@@ -1,7 +1,4 @@
-from src import string_query
-from src import api_calls
-from src import create_payload
-from src import create_response
+from src.wisecube_sdk import create_payload, create_response, api_calls, string_query
 import json
 
 
