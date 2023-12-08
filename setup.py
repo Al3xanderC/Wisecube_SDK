@@ -8,7 +8,7 @@ with open('requirements.txt') as f:
 
 
 setuptools.setup(
-    name="wisecube-dsk",
+    name="wisecube_sdk",
     version="1.0.6",
     author="Cosmin",
     author_email="cosmin@wisecube.ai",
@@ -24,5 +24,5 @@ setuptools.setup(
     install_requires=required,
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
-    python_requires=">=3.6",
+    python_requires=">=3.7",
 )
