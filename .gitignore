@@ -16,3 +16,4 @@ __pycache__/
 *.pyd
 *.pyz
 *.pyzw
+.idea
