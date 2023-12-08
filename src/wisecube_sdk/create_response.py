@@ -4,9 +4,7 @@ def qa(response):
 
 
 def documents(response):
-    return response.json()["data"]["summaryInsights"][0]["data"]["answers"]
-
-
+    return response.json()["data"]["summaryInsights"][0]
 
 def search_graph(response):
     print(response.json()["data"]["graphInsights"]["data"]["description"], "\n", "Name:", response.json()["data"]["graphInsights"]["data"]["rootNode"]["name"])

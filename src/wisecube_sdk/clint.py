@@ -90,7 +90,7 @@ class AuthClient:
         payload = create_payload.create(string_query.documents, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        create_response.documents(response)
+        return create_response.documents(response)
 
     def search_graph(self, text, nr=10):
         if create_payload.is_valid_url(text):
