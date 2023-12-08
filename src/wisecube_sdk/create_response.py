@@ -4,8 +4,8 @@ def qa(response):
 
 
 def documents(response):
-    for answers in response.json()["data"]["summaryInsights"][0]["data"]["answers"][0]["document"]:
-        print("\n", "ID:", answers["id"], "\n", "Title:", answers["title"], "\n", "Text:", answers["abs"], "\n", "Source:", answers["source"], "\n", "Publisher:", answers["index_name"])
+    return response.json()["data"]["summaryInsights"][0]["data"]["answers"]
+
 
 
 def search_graph(response):
