@@ -8,11 +8,11 @@ with open('requirements.txt') as f:
 
 
 setuptools.setup(
-    name="scraper-package",
-    version="1.0.6",
+    name="wisecube-sdk",
+    version="1.0.7",
     author="Cosmin",
     author_email="cosmin@wisecube.ai",
-    description="Databricks package version",
+    description="Wisecube SDK for graph Search",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/pypa/sampleproject",
