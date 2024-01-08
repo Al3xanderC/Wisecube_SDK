@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
-from src import WisecubeClient
+from Wisecube_SDK.src.wisecube_sdk.clint import WisecubeClient
 
-=======
-from Wisecube_SDK.src.wisecube_sdk import WisecubeClient
->>>>>>> Stashed changes
 RED = '\033[91m'
 RESET = '\033[0m'
 # open_client = WisecubeClient()
@@ -24,6 +20,6 @@ print(docs)
 print(RED + "\n\nSEARCH GRAPH_TEXT" + RESET)
 docs = auth_client.client.search_graph("What is covid 19?", 20)
 print(docs)
-print(RED + "\n\nSEARCH GRAPH_LINK" + RESET)
-docs = auth_client.client.search_graph("http://www .wikidata.org/entity/Q27677605")
-print(docs)
+print(RED + "\n\nAPI ONLY CLIENT TEST" + RESET)
+auth_api_client = WisecubeClient('LUcIwKi1SY2bkQgji8uwA5SAYO20hu0n53Ew4Bdq')
+auth_api_client.client.graph()

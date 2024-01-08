@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream:src/wisecube_sdk/clint.py
-from wisecube_sdk import create_payload, create_response, api_calls, string_query
-=======
-from Wisecube_SDK.src import string_query, api_calls, create_payload, create_response
->>>>>>> Stashed changes:src/wisecube_sdk.py
+from Wisecube_SDK.src.wisecube_sdk import api_calls, create_payload, create_response, string_query
 import json
 
 
@@ -11,6 +7,8 @@ class WisecubeClient:
         if len(args) == 0:
             open_url = "http://127.0.0.1:5000/api/endpoint"
             self.client = OpenClient(open_url)
+        elif len(args) == 1:
+            self.client = ApiClient(*args)
         elif len(args) == 3:
             self.client = AuthClient(*args)
         else:
@@ -35,6 +33,39 @@ class OpenClient:
         # payload = string_query.qa_query.format(QUERY=text)
         payload = "QUERY"
         return api_calls.create_api_call(payload, self.headers, self.url, "data")
+
+
+class ApiClient:
+    def __init__(self, api_key):
+        self.api_key = api_key
+        self.url = "https://api.wisecube.ai/orpheus/graphql"
+        self.client_id = "1mbgahp6p36ii1jc851olqfhnm"
+
+    def create_token(self):
+        payload = {
+            "AuthFlow": "REFRESH_TOKEN_AUTH",
+            "ClientId": self.client_id
+        }
+        headers = {"X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth",
+                   "Content-Type": "application/x-amz-json-1.1"
+                   }
+        cognito_url = "https://cognito-idp.us-east-2.amazonaws.com/"
+
+        response = api_calls.create_api_call(payload, headers, cognito_url, "json")
+
+        token = json.loads(response.text)["AuthenticationResult"]["AccessToken"]
+
+        return token
+
+    def get_headers(self):
+        return {
+            'Authorization': 'Bearer {}'.format(self.create_token()),
+            'Content-Type': 'application/json',
+            'x-api-key': self.api_key
+        }
+
+    def graph(self):
+        print("Auth client only with api graph")
 
 
 class AuthClient:
@@ -71,12 +102,6 @@ class AuthClient:
             'Content-Type': 'application/json',
             'x-api-key': self.api_key
         }
-
-    def search(self, text):
-        print(text)
-
-    def graph(self):
-        print("Auth client graph")
 
     def qa(self, text):
         variables = {
