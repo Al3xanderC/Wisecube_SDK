@@ -1,4 +1,4 @@
-from Wisecube_SDK.src.wisecube_sdk.clint import WisecubeClient
+from wisecube_sdk.clint import WisecubeClient
 
 RED = '\033[91m'
 RESET = '\033[0m'
