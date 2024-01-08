@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:src/wisecube_sdk/clint.py
 from wisecube_sdk import create_payload, create_response, api_calls, string_query
+=======
+from Wisecube_SDK.src import string_query, api_calls, create_payload, create_response
+>>>>>>> Stashed changes:src/wisecube_sdk.py
 import json
 
 
@@ -81,7 +85,7 @@ class AuthClient:
         payload = create_payload.create(string_query.qa, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        create_response.qa(response)
+        return create_response.qa(response)
 
     def documents(self, text):
         variables = {
@@ -106,7 +110,7 @@ class AuthClient:
         payload = create_payload.create(string_query.search_graph, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        create_response.search_graph(response)
+        return create_response.search_graph(response)
 
     def search_text(self, text):
         variables = {
@@ -115,4 +119,4 @@ class AuthClient:
         payload = create_payload.create(string_query.search_text, variables)
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
-        create_response.search_text(response)
+        return create_response.search_text(response)

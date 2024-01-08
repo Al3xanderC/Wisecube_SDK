@@ -1,5 +1,9 @@
+<<<<<<< Updated upstream
 from src import WisecubeClient
 
+=======
+from Wisecube_SDK.src.wisecube_sdk import WisecubeClient
+>>>>>>> Stashed changes
 RED = '\033[91m'
 RESET = '\033[0m'
 # open_client = WisecubeClient()
@@ -9,12 +13,17 @@ RESET = '\033[0m'
 # pen_client.client.qa('asd')
 auth_client = WisecubeClient('cristi@wisecube.ai', 'xdPhQgi8NK9r7tq', 'LUcIwKi1SY2bkQgji8uwA5SAYO20hu0n53Ew4Bdq')
 print(RED + "\n\nQA" + RESET)
-auth_client.client.qa("What is covid 19?")
+docs = auth_client.client.qa("What is covid 19?")
+print(docs)
 print(RED + "\n\nDOCUMENTS" + RESET)
-auth_client.client.documents("What is covid 19?")
+docs = auth_client.client.documents("What is covid 19?")
+print(docs)
 print(RED + "\n\nSEARCH_TEXT" + RESET)
-auth_client.client.search_text("What is covid 19?")
+docs = auth_client.client.search_text("What is covid 19?")
+print(docs)
 print(RED + "\n\nSEARCH GRAPH_TEXT" + RESET)
-auth_client.client.search_graph("What is covid 19?", 20)
+docs = auth_client.client.search_graph("What is covid 19?", 20)
+print(docs)
 print(RED + "\n\nSEARCH GRAPH_LINK" + RESET)
-auth_client.client.search_graph("http://www.wikidata.org/entity/Q27677605")
+docs = auth_client.client.search_graph("http://www .wikidata.org/entity/Q27677605")
+print(docs)
