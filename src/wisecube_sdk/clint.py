@@ -15,93 +15,13 @@ class WisecubeClient:
             raise Exception("Invalid args")
 
 
-class OpenClient:
-    def __init__(self, url):
+class QueryMethods:
+    def __init__(self, url, client_id):
         self.url = url
-        self.headers = {
-            'Content-Type': 'application/json'
-        }
-
-    def search(self, text):
-        # payload = string_query.qa_query.format(QUERY=text)
-        payload = "QUERY"
-        print(payload)
-        print(self.headers)
-        print("Open client search")
-
-    def qa(self, text):
-        # payload = string_query.qa_query.format(QUERY=text)
-        payload = "QUERY"
-        return api_calls.create_api_call(payload, self.headers, self.url, "data")
-
-
-class ApiClient:
-    def __init__(self, api_key):
-        self.api_key = api_key
-        self.url = "https://api.wisecube.ai/orpheus/graphql"
-        self.client_id = "1mbgahp6p36ii1jc851olqfhnm"
-
-    def create_token(self):
-        payload = {
-            "AuthFlow": "REFRESH_TOKEN_AUTH",
-            "ClientId": self.client_id
-        }
-        headers = {"X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth",
-                   "Content-Type": "application/x-amz-json-1.1"
-                   }
-        cognito_url = "https://cognito-idp.us-east-2.amazonaws.com/"
-
-        response = api_calls.create_api_call(payload, headers, cognito_url, "json")
-
-        token = json.loads(response.text)["AuthenticationResult"]["AccessToken"]
-
-        return token
+        self.client_id = client_id
 
     def get_headers(self):
-        return {
-            'Authorization': 'Bearer {}'.format(self.create_token()),
-            'Content-Type': 'application/json',
-            'x-api-key': self.api_key
-        }
-
-    def graph(self):
-        print("Auth client only with api graph")
-
-
-class AuthClient:
-    def __init__(self, username, password, api_key):
-        self.username = username
-        self.password = password
-        self.api_key = api_key
-        self.url = "https://api.wisecube.ai/orpheus/graphql"
-        self.client_id = "1mbgahp6p36ii1jc851olqfhnm"
-
-    def create_token(self):
-        payload = {
-            "AuthParameters": {
-                "USERNAME": self.username,
-                "PASSWORD": self.password
-            },
-            "AuthFlow": "USER_PASSWORD_AUTH",
-            "ClientId": self.client_id
-        }
-        headers = {"X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth",
-                   "Content-Type": "application/x-amz-json-1.1"
-                   }
-        cognito_url = "https://cognito-idp.us-east-2.amazonaws.com/"
-
-        response = api_calls.create_api_call(payload, headers, cognito_url, "json")
-
-        token = json.loads(response.text)["AuthenticationResult"]["AccessToken"]
-
-        return token
-
-    def get_headers(self):
-        return {
-            'Authorization': 'Bearer {}'.format(self.create_token()),
-            'Content-Type': 'application/json',
-            'x-api-key': self.api_key
-        }
+        raise NotImplementedError("Subclasses must implement get_headers")
 
     def qa(self, text):
         variables = {
@@ -145,3 +65,53 @@ class AuthClient:
         headers = self.get_headers()
         response = api_calls.create_api_call(payload, headers, self.url, "json")
         return create_response.search_text(response)
+
+
+class OpenClient:
+    def __init__(self, url):
+        self.url = url
+
+
+class AuthClient(QueryMethods):
+    def __init__(self, username, password):
+        super().__init__("https://api.wisecube.ai/orpheus/graphql", "1mbgahp6p36ii1jc851olqfhnm")
+        self.username = username
+        self.password = password
+
+    def create_token(self):
+        payload = {
+            "AuthParameters": {
+                "USERNAME": self.username,
+                "PASSWORD": self.password
+            },
+            "AuthFlow": "USER_PASSWORD_AUTH",
+            "ClientId": self.client_id
+        }
+        headers = {"X-Amz-Target": "AWSCognitoIdentityProviderService.InitiateAuth",
+                   "Content-Type": "application/x-amz-json-1.1"
+                   }
+        cognito_url = "https://cognito-idp.us-east-2.amazonaws.com/"
+
+        response = api_calls.create_api_call(payload, headers, cognito_url, "json")
+
+        token = json.loads(response.text)["AuthenticationResult"]["AccessToken"]
+
+        return token
+
+    def get_headers(self):
+        return {
+            'Authorization': 'Bearer {}'.format(self.create_token()),
+            'Content-Type': 'application/json',
+        }
+
+
+class ApiClient(QueryMethods):
+    def __init__(self, api_key):
+        super().__init__("https://api.wisecube.ai/orpheus/graphql", "1mbgahp6p36ii1jc851olqfhnm")
+        self.api_key = api_key
+
+    def get_headers(self):
+        return {
+            'Content-Type': 'application/json',
+            'x-api-key': self.api_key
+        }
